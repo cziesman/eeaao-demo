@@ -4,11 +4,15 @@
 
 ## Pre-requisites
 
+Demo Env Assumption: using Red Hat Demo Platform (RHDP) 
+
 Install the AMQ Streams operator. This can be done within your target namespace(s) (ie, 'streams' & 'dc2-streams'), or globally across all namespaces.
 
 Install the Prometheus operator. This can be done within your target namespace (ie, 'streams'), or globally across all namespaces.
 
 Install the Grafana operator. This can be done within your target namespace (ie, 'streams'), or globally across all namespaces.
+
+Install the Red Hat Single Sign-On operator. This should be done within namespace (ie, 'rhsso')
 
 Install the Data Grid operator. This can be done within your target namespace (ie, 'datagrid'), or globally across all namespaces.
 
@@ -41,6 +45,21 @@ oc -n datagrid apply -f ./infinispan.yaml
 oc -n datagrid apply -f ./item-description-cache.yaml
 ```
 
+__RHSSO__
+
+```
+#
+# Create/configure a RHSSO keycloak instance.
+Assuming you have already installed operator in ```rhsso```
+Create a new keycloak instance called ```keycloak``` with 1 instance
+Wait for ```keycloak-0``` pod to be in Running state
+Find the OpenShift Route for ```keycloak-0``` and click in the URL link
+RHSSO default login credentials can be found in Secrets->credential-keycloak
+After login, create the following Realms:
+cd "${PROJECT_ROOT}/rhsso/realms"
+Upload the json realm definitions to RHSSO console using the upload UI
+```
+
 __Microsoft SQL Server__
 
 ```
@@ -68,6 +87,7 @@ __AMQ Streams__
 cd "${PROJECT_ROOT}/streams"
 oc new-project streams
 oc -n streams apply -f ./kafka-metrics-configmap.yaml
+Update the kafka-cluster.yaml with keycloak references to your sandbox cluster
 oc -n streams apply -f ./kafka-cluster.yaml
 oc -n streams get secret dc1-cluster-cluster-ca-cert -o jsonpath='{.data.ca\.crt}' | base64 -d > ${PROJECT_ROOT}/tls/dc1-ca.crt
 oc -n streams apply -f ./kafka-topics.yaml
