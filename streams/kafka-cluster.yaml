@@ -17,25 +17,35 @@ spec:
         tls: true
         authentication:
           type: oauth
-          validIssuerUri: https://keycloak-rhsso.apps.cluster-cf62x.dynamic.redhatworkshops.io/auth/realms/demo
-          jwksEndpointUri: https://keycloak-rhsso.apps.cluster-cf62x.dynamic.redhatworkshops.io/auth/realms/demo/protocol/openid-connect/certs
+          clientId: kafka-broker 
+          clientSecret:
+            key: clientSecret
+            secretName: kafka-broker-client-secret
+          validIssuerUri: https://keycloak-rhsso.apps.cluster-ql8gl.dynamic.redhatworkshops.io/auth/realms/demo
+          jwksEndpointUri: https://keycloak-rhsso.apps.cluster-ql8gl.dynamic.redhatworkshops.io/auth/realms/demo/protocol/openid-connect/certs
           userNameClaim: preferred_username
+          enableOauthBearer: true
       - name: external
         port: 9094
         type: route
         tls: true
         authentication:
           type: oauth
-          validIssuerUri: https://keycloak-rhsso.apps.cluster-cf62x.dynamic.redhatworkshops.io/auth/realms/demo
-          jwksEndpointUri: https://keycloak-rhsso.apps.cluster-cf62x.dynamic.redhatworkshops.io/auth/realms/demo/protocol/openid-connect/certs
+          clientId: kafka-broker 
+          clientSecret:
+            key: clientSecret
+            secretName: kafka-broker-client-secret
+          validIssuerUri: https://keycloak-rhsso.apps.cluster-ql8gl.dynamic.redhatworkshops.io/auth/realms/demo
+          jwksEndpointUri: https://keycloak-rhsso.apps.cluster-ql8gl.dynamic.redhatworkshops.io/auth/realms/demo/protocol/openid-connect/certs
           userNameClaim: preferred_username
+          enableOauthBearer: true
     authorization:
       type: keycloak
       clientId: kafka
-      tokenEndpointUri: https://keycloak-rhsso.apps.cluster-cf62x.dynamic.redhatworkshops.io/auth/realms/kafka-authz/protocol/openid-connect/token
-      delegateToKafkaAcls: true
-      superUsers:
-      - User:service-account-kafka
+      tokenEndpointUri: https://keycloak-rhsso.apps.cluster-ql8gl.dynamic.redhatworkshops.io/auth/realms/kafka-authz/protocol/openid-connect/token
+      delegateToKafkaAcls: false
+      #superUsers:
+      #- User:service-account-kafka
     logging:
       type: inline
       loggers:
