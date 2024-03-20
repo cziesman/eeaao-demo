@@ -8,7 +8,7 @@ Demo Env Assumption: using Red Hat Demo Platform (RHDP)
 
 Install the AMQ Streams operator. This can be done within your target namespace(s) (ie, 'streams' & 'dc2-streams'), or globally across all namespaces.
 
-Install the Prometheus operator. This can be done within your target namespace (ie, 'streams'), or globally across all namespaces.
+Install the Prometheus operator. This needs to be done within your target namespace (ie, 'streams').
 
 Install the Grafana operator. This can be done within your target namespace (ie, 'streams'), or globally across all namespaces.
 
@@ -73,7 +73,7 @@ metadata:
   name: kafka-broker-client-secret
 type: Opaque
 data:
-  clientSecret: #paste the secret for 'kafka-broker-client' here; can be found in keycloak
+  clientSecret: #paste the secret for 'kafka-broker' here; can be found in keycloak
 ```
 Then create this secret in namespace ```streams```
 ``` 
