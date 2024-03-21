@@ -54,10 +54,10 @@ __RHSSO__
 2. Wait for ```keycloak-0``` pod to be in Running state
 3. Find the OpenShift Route for keycloak-0 and click in the URL link
 4. RHSSO default login credentials can be found in Secrets->```credential-keycloak```
-5. After login, create the following Realms:
-6. cd "${PROJECT_ROOT}/rhsso/realms"
-Upload the json realm definitions to RHSSO console using the upload UI
-7. This will create two realms ```demo``` and ```kafka-authz```
+5. After login, create the `demo` and `kafka-authz` Realms:
+    - cd "${PROJECT_ROOT}/rhsso/realms"
+    - Upload the json realm definitions to RHSSO console using the `Add Realm` button in the Realm drop-down menu.
+6. This will create two realms ```demo``` and ```kafka-authz```
 
 __AMQ Streams__
 
@@ -75,7 +75,9 @@ type: Opaque
 data:
   clientSecret: #paste the secret for 'kafka-broker' here; can be found in keycloak
 ```
-Then create this secret in namespace ```streams```
+You will need to click the `Regenerate Secret` button under Clients->Credentials to get a copy of the secret. 
+
+After saving the file, create this secret in namespace ```streams```
 ``` 
 oc -n streams apply -f ${PROJECT_ROOT}/rhsso/kafka-broker-client-secret.yaml
 ```
